@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { fetchGitHubData } from './utils/fetchGithub'; // Assuming fetchGitHubData is moved to a utils file
 import TreeItem from './components/TreeItem';
-import MarkdownViewer from './components/MarkdownViewer';
 import { GitHubIcon } from './components/Icons';
 import { GitHubItem } from './models/github-item';
+import FileDetails from './components/FileDetails';
 
 const App = () => {
     const [owner, setOwner] = useState('punkrocker178');
@@ -91,7 +91,7 @@ const App = () => {
                 </aside>
 
                 <main className="flex-grow bg-gray-900 overflow-hidden">
-                    <MarkdownViewer file={selectedFile} owner={owner} repo={repo} />
+                    <FileDetails file={selectedFile} owner={owner} repo={repo} />
                 </main>
             </div>
         </div>
