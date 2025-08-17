@@ -45,7 +45,7 @@ const FileDetails = ({ file, owner, repo }: any) => {
     if (error) {
         return <div className="flex items-center justify-center h-full text-red-400">{error}</div>;
     }
-    
+
     if (!file) {
         return <div className="flex flex-col items-center justify-center h-full text-gray-500">
             <h3 className="text-lg font-semibold">Select a file to view its content</h3>
@@ -54,12 +54,11 @@ const FileDetails = ({ file, owner, repo }: any) => {
     }
 
     return (
-        <div>
-            {isMarkdown ? (
-                <MarkdownViewer content={content} />
-            ) : (
+        <div className="prose prose-invert max-w-full w-full h-full overflow-y-auto p-6 bg-gray-900 rounded-lg">
+            {isMarkdown ? (<MarkdownViewer content={content} />) : (
                 <pre className="whitespace-pre-wrap break-words text-gray-300">{content}</pre>
-            )}
+            )
+            }
         </div>
     );
 }
