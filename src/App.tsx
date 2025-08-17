@@ -4,6 +4,7 @@ import TreeItem from './components/TreeItem';
 import { GitHubIcon } from './components/Icons';
 import { GitHubItem } from './models/github-item';
 import FileDetails from './components/FileDetails';
+import './styles/index.css';
 
 const App = () => {
     const [owner, setOwner] = useState('punkrocker178');
