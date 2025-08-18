@@ -17,6 +17,14 @@ h4, h5, h6 {
     font-weight: 600;
 }
 
+ul, ol {
+    margin: 0 0 1rem 1.5rem; /* Add left margin for indentation */
+}
+
+ul, ol, menu {
+    list-style: unset;
+}
+
 a {
     color: #3b82f6; /* Blue links */
     text-decoration: none;
