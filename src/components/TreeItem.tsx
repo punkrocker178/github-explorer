@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchGitHubData } from '../utils/fetchGithub'; // Adjust the import path as necessary
+import { fetchGitHubData } from '../services/fetchGithub'; // Adjust the import path as necessary
 import { FileIcon, FolderIcon, ChevronIcon } from './Icons';
 import { GitHubItem } from '../models/github-item';
 import { TreeItemProps } from '../models/tree-item';
