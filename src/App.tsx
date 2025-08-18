@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { fetchGitHubData } from './utils/fetchGithub'; // Assuming fetchGitHubData is moved to a utils file
+import { fetchGitHubData } from './services/fetchGithub'; // Assuming fetchGitHubData is moved to a utils file
 import TreeItem from './components/TreeItem';
 import { GitHubIcon } from './components/Icons';
 import { GitHubItem } from './models/github-item';

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { decodeBase64Unicode } from "../utils/helper";
 import MarkdownViewer from "./MarkdownViewer";
+import { fetchGitHubData } from '../services/fetchGithub';
 
 const FileDetails = ({ file, owner, repo }: any) => {
     const [content, setContent] = useState('');
@@ -18,11 +19,7 @@ const FileDetails = ({ file, owner, repo }: any) => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${file.path}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch file content');
-                }
-                const fileData = await response.json();
+                const fileData = await fetchGitHubData(owner, repo, file.path);
                 const decodedContent = decodeBase64Unicode(fileData.content);
                 setContent(decodedContent);
                 const markdownExtensions = ['.md', '.markdown', '.mdown', '.mkdn'];
