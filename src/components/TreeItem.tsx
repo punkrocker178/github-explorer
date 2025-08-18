@@ -46,7 +46,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ item, owner, repo, onFileSelect }) 
       <div onClick={handleToggle} className={itemClass}>
         {isDirectory && <ChevronIcon isOpen={isOpen} />}
         {isDirectory ? <FolderIcon isOpen={isOpen} /> : <FileIcon />}
-        <span className="truncate">{item.name}</span>
+        <span className="truncate" title={item.name}>{item.name}</span>
       </div>
       {isOpen && isDirectory && (
         <div className="pl-6 border-l-2 border-gray-600 ml-2">

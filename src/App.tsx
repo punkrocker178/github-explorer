@@ -4,6 +4,7 @@ import TreeItem from './components/TreeItem';
 import { GitHubIcon } from './components/Icons';
 import { GitHubItem } from './models/github-item';
 import FileDetails from './components/FileDetails';
+import './styles/index.css';
 
 const App = () => {
     const [owner, setOwner] = useState('punkrocker178');
@@ -81,7 +82,7 @@ const App = () => {
             </header>
 
             <div className="flex flex-grow overflow-hidden">
-                <aside className="w-1/3 max-w-xs lg:w-1/4 lg:max-w-sm bg-gray-800 p-4 overflow-y-auto border-r border-gray-700">
+                <aside className="w-1/3 max-w-xs lg:w-1/4 lg:max-w-sm flex-shrink-0 bg-gray-800 p-4 overflow-y-auto border-r border-gray-700">
                     <h2 className="text-lg font-semibold mb-2 truncate">{owner} / {repo}</h2>
                     {isLoading && <div className="text-gray-400">Loading repository tree...</div>}
                     {error && <div className="text-red-400 bg-red-900/50 p-3 rounded-md">{error}</div>}
