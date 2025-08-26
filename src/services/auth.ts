@@ -12,18 +12,8 @@ export const authService = {
     return response.ok ? response.json() : null;
   },
 
-  getSessionFromUrl: () => {
-    const params = new URLSearchParams(window.location.search);
-    const session = params.get('session');
-    if (session) {
-      localStorage.setItem('github_session', session);
-      window.history.replaceState({}, '', window.location.pathname);
-    }
-    return session || localStorage.getItem('github_session');
-  },
-
   logout: () => {
-    localStorage.removeItem('github_session');
+    localStorage.removeItem('sessionId');
     window.location.reload();
   }
 };

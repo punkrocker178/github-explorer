@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router';
 import { fetchGitHubData } from './services/fetchGithub'; // Assuming fetchGitHubData is moved to a utils file
 import TreeItem from './components/TreeItem';
 import { GitHubIcon } from './components/Icons';
 import { GitHubItem } from './models/github-item';
 import FileDetails from './components/FileDetails';
 import './styles/index.css';
+import { authService } from './services/auth';
 
 const App = () => {
     const [owner, setOwner] = useState('punkrocker178');
@@ -15,6 +17,8 @@ const App = () => {
     const [error, setError] = useState<string | null>(null);
     const [inputOwner, setInputOwner] = useState('punkrocker178');
     const [inputRepo, setInputRepo] = useState('notes-vault');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const loadRepo = useCallback(async (currentOwner: string, currentRepo: string) => {
         if (!currentOwner || !currentRepo) {
@@ -40,7 +44,15 @@ const App = () => {
             setIsLoading(false);
         }
     }, []);
-    
+
+    useEffect(() => {
+        if (searchParams.has('session')) {
+            const session = searchParams.get('session')!;
+            localStorage.setItem('sessionId', session);
+            setIsLoggedIn(true);
+        }
+    }, [searchParams]);
+
     useEffect(() => {
         loadRepo(owner, repo);
     }, [loadRepo]);
@@ -51,6 +63,15 @@ const App = () => {
         setRepo(inputRepo);
         loadRepo(inputOwner, inputRepo);
     };
+
+    const handleGithubLogin = () => {
+        authService.login();
+    }
+
+    const handleGithubLogout = () => {
+        authService.logout();
+        setIsLoggedIn(false);
+    }
 
     return (
         <div className="bg-gray-800 text-white min-h-screen font-sans flex flex-col">
@@ -78,6 +99,15 @@ const App = () => {
                     <button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
                         {isLoading ? 'Loading...' : 'Load'}
                     </button>
+                    {isLoggedIn ? (
+                        <button onClick={handleGithubLogout} className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
+                           Log out 
+                        </button>
+                    ) : (
+                        <button onClick={handleGithubLogin} className="bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
+                            Log in
+                        </button>
+                    )}
                 </form>
             </header>
 
