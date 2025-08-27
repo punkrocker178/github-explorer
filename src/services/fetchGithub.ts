@@ -1,15 +1,21 @@
-const GITHUB_API_BASE = 'https://api.github.com/repos/';
+const API_BASE = 'http://localhost:3001/api/github/';
 
 export const fetchGitHubData = async (owner: string, repo: string, path = '') => {
-  const url = `${GITHUB_API_BASE}${owner}/${repo}/contents/${path}`;
+  const url = `${API_BASE}${owner}/${repo}/${path}`;
+  const sessionId = localStorage.getItem('sessionId');
+  
+  const fetchOptions: RequestInit = sessionId
+    ? { headers: { 'Authorization': `Bearer ${sessionId}` } }
+    : {};
+  
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, fetchOptions);
     if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
     return await response.json();
   } catch (error) {
-    console.error("Failed to fetch from GitHub:", error);
+    console.error("Failed to fetch from API:", error);
     throw error;
   }
 };

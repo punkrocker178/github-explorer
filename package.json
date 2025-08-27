@@ -7,20 +7,30 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.12",
-    "dompurify": "^3.2.6",
-    "marked": "^16.1.2",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.1.12"
+    "serve": "vite preview",
+    "server": "node server.js",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\""
   },
   "devDependencies": {
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
+    "@types/react-router": "^5.1.20",
     "@vitejs/plugin-react": "^5.0.0",
+    "concurrently": "^9.1.0",
+    "dotenv": "^16.4.7",
     "vite": "^6.3.5"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.12",
+    "cors": "^2.8.5",
+    "dompurify": "^3.2.6",
+    "dotenv": "^16.4.7",
+    "acebase": "^1.29.5",
+    "express": "^5.0.2",
+    "marked": "^16.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.8.2",
+    "tailwindcss": "^4.1.12"
   }
 }
