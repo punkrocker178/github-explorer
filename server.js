@@ -11,11 +11,13 @@ const GITHUB_API_BASE = 'https://api.github.com';
 const GITHUB_OAUTH_URL = 'https://github.com/login/oauth';
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-const REDIRECT_URI = process.env.GITHUB_REDIRECT_URI || 'http://localhost:3001/auth/callback';
+const REDIRECT_URI = process.env.GITHUB_REDIRECT_URI || 'http://localhost:3000/api/auth/callback';
+const APP_URI = process.env.APP_URI || 'http://localhost:3000';
+
 
 const db = new AceBase('github-explorer');
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: APP_URI }));
 app.use(express.json());
 
 const getAuthHeaders = () => {
@@ -25,12 +27,12 @@ const getAuthHeaders = () => {
   };
 };
 
-app.get('/auth/login', (req, res) => {
+app.get('/api/auth/login', (req, res) => {
   const authUrl = `${GITHUB_OAUTH_URL}/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
   res.redirect(authUrl);
 });
 
-app.get('/auth/callback', async (req, res) => {
+app.get('/api/auth/callback', async (req, res) => {
   const { code } = req.query;
 
   const body = JSON.stringify({
@@ -54,13 +56,13 @@ app.get('/auth/callback', async (req, res) => {
     const sessionId = Date.now().toString();
     await db.ref(`sessions/${sessionId}`).set({ token: tokenData.access_token, createdAt: Date.now() });
 
-    res.redirect(`http://localhost:3000?session=${sessionId}`);
+    res.redirect(`${APP_URI}?session=${sessionId}`);
   } catch (error) {
     res.status(500).json({ error: 'Authentication failed' });
   }
 });
 
-app.get('/auth/user', async (req, res) => {
+app.get('/api/auth/user', async (req, res) => {
   const sessionId = req.headers.authorization?.replace('Bearer ', '');
   const sessionData = await db.ref(`sessions/${sessionId}`).get();
   const token = sessionData.val()?.token;
@@ -92,7 +94,6 @@ app.get('/api/github/:owner/:repo/{*splat}', async (req, res) => {
   const sessionId = req.headers.authorization?.replace('Bearer ', '');
   const sessionData = await db.ref(`sessions/${sessionId}`).get();
   const userToken = sessionData.val()?.token;
-
   const headers = userToken ? {
     'Authorization': `Bearer ${userToken}`,
     'Accept': 'application/vnd.github.v3+json'
