@@ -86,44 +86,48 @@ const App = () => {
     return (
         <GlobalContext value={globalState}>
             <div className="bg-gray-800 text-white min-h-screen font-sans flex flex-col">
-                <header className="bg-gray-900 p-4 shadow-lg flex justify-between items-center z-10">
+                <header className="bg-gray-900 p-4 shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center z-10 gap-4">
                     <div className="flex items-center">
                         <GitHubIcon />
-                        <h1 className="text-xl font-bold ml-3">GitHub Repository Explorer</h1>
+                        <h1 className="text-lg sm:text-xl font-bold ml-3">GitHub Repository Explorer</h1>
                     </div>
-                    <form onSubmit={handleLoadRepo} className="flex items-center space-x-2">
-                        <input
-                            type="text"
-                            value={inputOwner}
-                            onChange={(e) => setInputOwner(e.target.value)}
-                            placeholder="Owner (e.g., facebook)"
-                            className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none w-40"
-                        />
-                        <span className="text-gray-500">/</span>
-                        <input
-                            type="text"
-                            value={inputRepo}
-                            onChange={(e) => setInputRepo(e.target.value)}
-                            placeholder="Repo (e.g., react)"
-                            className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none w-40"
-                        />
-                        <button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
-                            {isLoading ? 'Loading...' : 'Load'}
-                        </button>
-                        {globalState.isLoggedIn ? (
-                            <button onClick={handleGithubLogout} className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
-                                Log out
+                    <form onSubmit={handleLoadRepo} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="text"
+                                value={inputOwner}
+                                onChange={(e) => setInputOwner(e.target.value)}
+                                placeholder="Owner"
+                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32"
+                            />
+                            <span className="text-gray-500">/</span>
+                            <input
+                                type="text"
+                                value={inputRepo}
+                                onChange={(e) => setInputRepo(e.target.value)}
+                                placeholder="Repo"
+                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32"
+                            />
+                        </div>
+                        <div className="flex gap-2">
+                            <button type="submit" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors flex-1 sm:flex-none">
+                                {isLoading ? 'Loading...' : 'Load'}
                             </button>
-                        ) : (
-                            <button onClick={handleGithubLogin} className="bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors">
-                                Log in
-                            </button>
-                        )}
+                            {globalState.isLoggedIn ? (
+                                <button onClick={handleGithubLogout} className="bg-gray-600 hover:bg-gray-700 disabled:bg-gray-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors flex-1 sm:flex-none">
+                                    Log out
+                                </button>
+                            ) : (
+                                <button onClick={handleGithubLogin} className="bg-green-600 hover:bg-green-700 disabled:bg-green-800 disabled:cursor-not-allowed text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors flex-1 sm:flex-none">
+                                    Log in
+                                </button>
+                            )}
+                        </div>
                     </form>
                 </header>
 
-                <div className="flex flex-grow overflow-hidden">
-                    <aside className="w-1/3 max-w-xs lg:w-1/4 lg:max-w-sm flex-shrink-0 bg-gray-800 p-4 overflow-y-auto border-r border-gray-700">
+                <div className="flex flex-col md:flex-row flex-grow overflow-hidden">
+                    <aside className="w-full md:w-1/3 md:max-w-xs lg:w-1/4 lg:max-w-sm flex-shrink-0 bg-gray-800 p-4 overflow-y-auto border-b md:border-b-0 md:border-r border-gray-700 max-h-64 md:max-h-none">
                         <h2 className="text-lg font-semibold mb-2 truncate">{owner} / {repo}</h2>
                         {isLoading && <div className="text-gray-400">Loading repository tree...</div>}
                         {error && <div className="text-red-400 bg-red-900/50 p-3 rounded-md">{error}</div>}

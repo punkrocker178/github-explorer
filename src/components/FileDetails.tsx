@@ -44,16 +44,16 @@ const FileDetails = ({ file, owner, repo }: any) => {
     }
 
     if (!file) {
-        return <div className="flex flex-col items-center justify-center h-full text-gray-500">
-            <h3 className="text-lg font-semibold">Select a file to view its content</h3>
-            <p>Click on a file in the tree on the left.</p>
+        return <div className="flex flex-col items-center justify-center h-full text-gray-500 p-4">
+            <h3 className="text-lg font-semibold text-center">Select a file to view its content</h3>
+            <p className="text-center">Click on a file in the tree.</p>
         </div>;
     }
 
     return (
-        <div className="prose prose-invert max-w-full w-full h-full overflow-y-auto p-6 bg-gray-900 rounded-lg">
+        <div className="prose prose-invert max-w-full w-full h-full overflow-y-auto p-4 md:p-6 bg-gray-900 rounded-lg">
             {isMarkdown ? (<MarkdownViewer content={content} />) : (
-                <pre className="whitespace-pre-wrap break-words text-gray-300">{content}</pre>
+                <pre className="whitespace-pre-wrap break-words text-gray-300 text-sm md:text-base">{content}</pre>
             )
             }
         </div>

@@ -15,7 +15,7 @@ const MarkdownViewer = ({ content }: any) => {
 
 
     return (
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        <div className="markdown-content" dangerouslySetInnerHTML={{ __html: htmlContent }} />
     );
 };
 
