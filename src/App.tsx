@@ -86,7 +86,7 @@ const App = () => {
     return (
         <GlobalContext value={globalState}>
             <div className="bg-gray-800 text-white min-h-screen font-sans flex flex-col">
-                <header className="bg-gray-900 p-4 shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center z-10 gap-4">
+                <nav className="bg-gray-900 p-4 shadow-lg flex flex-col sm:flex-row justify-between items-start sm:items-center z-10 gap-4">
                     <div className="flex items-center">
                         <GitHubIcon />
                         <h1 className="text-lg sm:text-xl font-bold ml-3">GitHub Repository Explorer</h1>
@@ -98,7 +98,7 @@ const App = () => {
                                 value={inputOwner}
                                 onChange={(e) => setInputOwner(e.target.value)}
                                 placeholder="Owner"
-                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32"
+                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32 w-full"
                             />
                             <span className="text-gray-500">/</span>
                             <input
@@ -106,7 +106,7 @@ const App = () => {
                                 value={inputRepo}
                                 onChange={(e) => setInputRepo(e.target.value)}
                                 placeholder="Repo"
-                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32"
+                                className="bg-gray-700 border border-gray-600 rounded-md px-3 py-1.5 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none flex-1 sm:w-32 w-full"
                             />
                         </div>
                         <div className="flex gap-2">
@@ -124,7 +124,7 @@ const App = () => {
                             )}
                         </div>
                     </form>
-                </header>
+                </nav>
 
                 <div className="flex flex-col md:flex-row flex-grow overflow-hidden">
                     <aside className="w-full md:w-1/3 md:max-w-xs lg:w-1/4 lg:max-w-sm flex-shrink-0 bg-gray-800 p-4 overflow-y-auto border-b md:border-b-0 md:border-r border-gray-700 max-h-64 md:max-h-none">
