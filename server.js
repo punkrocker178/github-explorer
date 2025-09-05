@@ -34,7 +34,7 @@ const getAccessToken = (payload, isRefresh) => {
   };
 
   if (isRefresh) {
-    body.refresh_token = payload.refresh_token;
+    body.refresh_token = payload.refreshToken;
     body.grant_type = 'refresh_token';
   } else {
     body.code = payload.code;
@@ -66,13 +66,18 @@ const saveToken = async (tokenData) => {
   return sessionId;
 }
 
+const removeSession = async (sessionId) => {
+  const sessionsRef = db.ref('sessions');
+  await sessionsRef.child(sessionId).remove();
+};
+
 app.get('/api/auth/login', (req, res) => {
   const authUrl = `${GITHUB_OAUTH_URL}/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}`;
   res.redirect(authUrl);
 });
 
 app.get('/api/auth/callback', async (req, res) => {
-  const { code }  = req.query;
+  const { code } = req.query;
   console.log('Authorization code received:', code);
 
   try {
@@ -140,10 +145,11 @@ app.get('/api/github/:owner/:repo/{*splat}', async (req, res) => {
             const refreshToken = sessionData.val()?.refreshToken;
             const tokenResponse = await getAccessToken({ refreshToken }, true);
             const tokenData = await tokenResponse.json();
-            const sessionId = await saveToken(tokenData);
-            res.redirect(`${APP_URI}?session=${sessionId}`);
+            const newSessionId = await saveToken(tokenData);
+            await removeSession(sessionId);
+            return res.status(207).json({ sessionId: newSessionId });
           }
-
+          break;
         case 403:
           return res.status(403).json({ error: 'Forbidden: You do not have access to this resource' });
         case 404:
