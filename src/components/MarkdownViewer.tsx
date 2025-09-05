@@ -24,7 +24,6 @@ hljs.registerLanguage('plaintext', plaintext);
 marked.use(
     markedHighlight({
         highlight(code, lang) {
-            console.log(code,lang);
             const language = hljs.getLanguage(lang) ? lang : 'plaintext';
             return hljs.highlight(code, { language }).value;
         },
