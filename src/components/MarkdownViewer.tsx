@@ -27,7 +27,7 @@ marked.use(
             const language = hljs.getLanguage(lang) ? lang : 'plaintext';
             return hljs.highlight(code, { language }).value;
         },
-        langPrefix: 'hljs language-',
+        langPrefix: 'hljs language-'
     })
 );
 
