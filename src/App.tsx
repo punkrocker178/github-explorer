@@ -47,8 +47,12 @@ const App = () => {
             setTree(data);
         } catch (e: any) {
             if (e.type === 'SESSION_EXPIRED') {
-                setSearchParams({ session: e.newSessionId, isRefresh: 'true' });
-                console.log('Session expired. Token refreshed.');
+                // TODO: Handle session expiration and token refresh
+                // setSearchParams({ session: e.newSessionId, isRefresh: 'true' });
+                // console.log('Session expired. Token refreshed.');
+
+                setSearchParams({ session: e.newSessionId });
+                window.location.reload();
             } else {
                 setError('Failed to load repository. Please check the owner and repo name.');
             }
