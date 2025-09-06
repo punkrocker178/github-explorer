@@ -11,6 +11,12 @@ export const fetchGitHubData = async (owner: string, repo: string, path = '') =>
     if (!response.ok) {
       throw new Error(`API error: ${response.status} ${response.statusText}`);
     }
+
+    if (response.status === 207) {
+      const data = await response.json();
+      throw { type: 'SESSION_EXPIRED', newSessionId: data.sessionId };
+    }
+
     return await response.json();
   } catch (error) {
     console.error("Failed to fetch from API:", error);
