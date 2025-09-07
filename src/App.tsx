@@ -37,6 +37,7 @@ const App = () => {
         setTree([]);
         try {
             const data = await fetchGitHubData(currentOwner, currentRepo);
+
             data.sort((a: any, b: any) => {
                 if (a.type === b.type) {
                     return a.name.localeCompare(b.name);
@@ -44,8 +45,18 @@ const App = () => {
                 return a.type === 'dir' ? -1 : 1;
             });
             setTree(data);
-        } catch (e) {
-            setError('Failed to load repository. Please check the owner and repo name.');
+        } catch (e: any) {
+            if (e.type === 'SESSION_EXPIRED') {
+                // TODO: Handle session expiration and token refresh
+                // setSearchParams({ session: e.newSessionId, isRefresh: 'true' });
+                // console.log('Session expired. Token refreshed.');
+
+                setSearchParams({ session: e.newSessionId });
+                window.location.reload();
+            } else {
+                setError('Failed to load repository. Please check the owner and repo name.');
+            }
+
         } finally {
             setIsLoading(false);
         }
@@ -56,6 +67,10 @@ const App = () => {
             const session = searchParams.get('session')!;
             localStorageService.setItem('sessionId', session);
             setGlobalState(state => ({ ...state, isLoggedIn: true }));
+        }
+
+        if (searchParams.get('isRefresh') === 'true') {
+            loadRepo(owner, repo);
         }
     }, [searchParams]);
 

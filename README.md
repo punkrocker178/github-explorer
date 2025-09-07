@@ -37,7 +37,25 @@ To get started with the project, follow these steps:
    npm run dev
    ```
 
-   The application will be available at `http://localhost:3000`.
+   The application will be available at `http://localhost:3000`.  
+   
+
+   **Run Docker**
+   
+   **Prerequisite:** Needs to create a docker `bridge` network first
+   ```bash
+   docker network create github-explorer
+   ```
+
+   Backend proxy
+   ```bash
+   docker run -it --rm  -p 3001:3001 -v $PWD:/app --name gh-server --network github-explorer  -w /app node:22-alpine npm run server
+   ```
+   
+   Frontend
+   ```bash
+   docker run -it --rm  -p 3000:3000 -v $PWD:/app --name gh-fe --network github-explorer  -w /app node:22-alpine npm run dev
+   ```
 
 ## Project Structure
 
