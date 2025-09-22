@@ -9,6 +9,7 @@ This project is a GitHub Repository Explorer built with React. It allows users t
 - Browse through directories and files in a GitHub repository.
 - View file contents, including Markdown rendering.
 - Search for repositories by owner and name.
+- Implement [Session Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage) to store file contents. Cached data is automatically removed when page is closed, data survives on page refresh.
 
 ## Getting Started
 
